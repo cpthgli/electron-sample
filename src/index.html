@@ -10,11 +10,10 @@
   <h1>{{.Heading}}</h1>
   <p>Using node {{.Node}}, Chrome {{.Chrome}}, and Electron {{.Electron}} and Go {{.Go}}.</p>
   <form method="post">
-    <ul>
-      <li><input type="text" name="text"></li>
-      <li><input type="submit" value="submit"></li>
-    </ul>
+    <input type="text" name="text" placeholder="text">
+    <input type="submit" value="submit">
   </form>
+  <p>text = {{.PostText}}</p>
 </body>
 
 </html>

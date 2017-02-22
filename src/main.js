@@ -10,30 +10,42 @@ function createMainWindow() {
   });
 
   function runServer() {
-    var server = require('child_process').spawn('./main', [process.versions.node, process.versions.chrome, process.versions.electron]);
+    var server = require('child_process').spawn('./main');
+    console.log('server started');
     return server;
   }
 
   function load() {
+    var urlencode = require('urlencode');
     var rq = require('request-promise');
     var mainAddr = 'http://localhost:8080';
-    mainWindow.loadURL(mainAddr);
-    rq(mainAddr)
-      .then(function (htmlString) {
-        console.log('server started');
-        mainWindow.loadURL(mainAddr);
-      })
-      .catch(function (err) {
-        console.log(err)
-        return
-      });
+    var options = {
+      method: 'POST',
+      uri: mainAddr,
+      form: {
+        node: process.versions.node,
+        chrome: process.versions.chrome,
+        electron: process.versions.electron
+      }
+    }
+
+    var url = mainAddr + "/?" + urlencode.stringify(options.form);
+    console.log(url);
+    mainWindow.loadURL(url);
+    console.log("url loaded")
+    // rq.
+    // rq(options)
+    //   .then(function (htmlString) {
+    //     mainWindow.loadURL(mainAddr);
+    //   })
+    //   .catch(function (err) {
+    //     console.log(err)
+    //     return
+    //   });
   }
 
-  console.log('pre-server');
   var server = runServer();
-  console.log('next-server');
   load();
-  console.log('next-load');
 
   // 遅延表示
   // mainWindow.once('ready-to-show', () => {
@@ -47,7 +59,6 @@ function createMainWindow() {
     console.log('closed');
   });
 }
-
 app.on('ready', createMainWindow);
 
 app.on('window-all-closed', function () {
