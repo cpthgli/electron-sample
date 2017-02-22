@@ -1,5 +1,3 @@
-# build app
-app/
-
-# build script
-built.sh
+node_modules/
+electron-sample*/
+src/main

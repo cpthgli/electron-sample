@@ -1,5 +1,24 @@
 {
   "name": "electron-sample",
-  "version": "0.1.2",
-  "main": "main.js"
+  "version": "0.2.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "go build main.go;electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cpthgli/electron-sample.git"
+  },
+  "author": "cpthgli",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cpthgli/electron-sample/issues"
+  },
+  "homepage": "https://github.com/cpthgli/electron-sample#readme",
+  "dependencies": {
+    "electron": "^1.4.15",
+    "request": "^2.79.0",
+    "request-promise": "^4.1.1"
+  }
 }

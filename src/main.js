@@ -1,39 +1,64 @@
-const electron = require('electron')
-const app = electron.app
-const BrowserWindow = electron.BrowserWindow
+const electron = require('electron');
+const app = electron.app;
+const BrowserWindow = electron.BrowserWindow;
+let mainWindow;
 
-const path = require('path')
-const url = require('url')
-
-let mainWindow
-
-function createWindow() {
+function createMainWindow() {
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600
-  })
+  });
 
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'index.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
+  function runServer() {
+    var server = require('child_process').spawn('./main', [process.versions.node, process.versions.chrome, process.versions.electron]);
+    return server;
+  }
+
+  function load() {
+    var rq = require('request-promise');
+    var mainAddr = 'http://localhost:8080';
+    mainWindow.loadURL(mainAddr);
+    rq(mainAddr)
+      .then(function (htmlString) {
+        console.log('server started');
+        mainWindow.loadURL(mainAddr);
+      })
+      .catch(function (err) {
+        console.log(err)
+        return
+      });
+  }
+
+  console.log('pre-server');
+  var server = runServer();
+  console.log('next-server');
+  load();
+  console.log('next-load');
+
+  // 遅延表示
+  // mainWindow.once('ready-to-show', () => {
+  //  console.log('main ready-to-show');
+  //  mainWindow.show()
+  // })
 
   mainWindow.on('closed', function () {
-   mainWindow = null
- })
+    mainWindow = null;
+    server.kill('SIGINT');
+    console.log('closed');
+  });
 }
 
-app.on('ready', createWindow);
+app.on('ready', createMainWindow);
 
 app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
-    app.quit()
+    app.quit();
   }
+  console.log('window all clesed');
 })
 
 app.on('activate', function () {
   if (mainWindow === null) {
-    createWindow();
+    createMainWindow();
   }
 })
