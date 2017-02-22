@@ -23,7 +23,7 @@ type HomePage struct {
 	Chrome   string
 	Electron string
 	Go       string
-	PostText string
+	Addr     string
 }
 
 // AboutPage is about page struct
@@ -62,7 +62,7 @@ func (p *HomePage) setPage(r *http.Request, args []string) {
 	p.Chrome = sliceToString(r.Form["chrome"], "unspecified")
 	p.Electron = sliceToString(r.Form["electron"], "unspecified")
 	p.Go = runtime.Version()[2:]
-	p.PostText = sliceToString(r.Form["text"], "unspecified")
+	p.Addr = sliceToString(r.Form["url"], "unspecified")
 }
 func (p *AboutPage) setPage() {
 	p.Template = "about.html"
@@ -122,6 +122,9 @@ func allHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 func (p *HomePage) handler(w http.ResponseWriter, r *http.Request) {
+	if p.Addr != "unspecified" {
+		http.Redirect(w, r, p.Addr, 302)
+	}
 	statusLog(w, r)
 	tmpl, err := template.ParseFiles(p.Template)
 	if err != nil {

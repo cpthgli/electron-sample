@@ -1,7 +1,10 @@
 const electron = require('electron');
 const app = electron.app;
+const Menu = electron.Menu;
 const BrowserWindow = electron.BrowserWindow;
 let mainWindow;
+
+const menu = new Menu()
 
 function createMainWindow() {
   mainWindow = new BrowserWindow({
