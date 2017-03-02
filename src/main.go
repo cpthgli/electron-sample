@@ -35,7 +35,7 @@ type AboutPage struct {
 type ErrorPage struct {
 	Page
 	Status  int
-	Messege string
+	Message string
 }
 
 func sliceToString(sliceString []string, unspecified string) string {
@@ -69,12 +69,12 @@ func (p *AboutPage) setPage() {
 	p.Title = "About"
 	p.Heading = "About page"
 }
-func (p *ErrorPage) setPage(status int, messege string) {
+func (p *ErrorPage) setPage(status int, message string) {
 	p.Template = "error.html"
 	p.Title = "Error"
 	p.Heading = "Error"
 	p.Status = status
-	p.Messege = messege
+	p.Message = message
 }
 
 func statusLog(w http.ResponseWriter, r *http.Request) {
@@ -126,33 +126,33 @@ func (p *HomePage) handler(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, p.Addr, 302)
 	}
 	statusLog(w, r)
-	tmpl, err := template.ParseFiles(p.Template)
+	tpl, err := template.ParseFiles(p.Template)
 	if err != nil {
 		panic(err)
 	}
-	err = tmpl.Execute(w, *p)
+	err = tpl.Execute(w, *p)
 	if err != nil {
 		panic(err)
 	}
 }
 func (p *AboutPage) handler(w http.ResponseWriter, r *http.Request) {
 	statusLog(w, r)
-	tmpl, err := template.ParseFiles(p.Template)
+	tpl, err := template.ParseFiles(p.Template)
 	if err != nil {
 		panic(err)
 	}
-	err = tmpl.Execute(w, *p)
+	err = tpl.Execute(w, *p)
 	if err != nil {
 		panic(err)
 	}
 }
 func (p *ErrorPage) handler(w http.ResponseWriter, r *http.Request, status int) {
 	statusLog(w, r)
-	tmpl, err := template.ParseFiles(p.Template)
+	tpl, err := template.ParseFiles(p.Template)
 	if err != nil {
 		panic(err)
 	}
-	err = tmpl.Execute(w, *p)
+	err = tpl.Execute(w, *p)
 	if err != nil {
 		panic(err)
 	}
