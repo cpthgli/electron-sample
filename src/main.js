@@ -11,7 +11,7 @@ function createMainWindow() {
     width: 800,
     height: 600
   });
-
+  // TODO: get random port and set
   function runServer() {
     var server = require('child_process').execFile('./main');
     console.log('server started');
@@ -72,7 +72,6 @@ app.on('window-all-closed', function () {
 })
 
 app.on('activate', function () {
-  if (mainWindow === null) {
-    createMainWindow();
-  }
-})
+      if (mainWindow === null) {
+        createMainWindow();
+      }

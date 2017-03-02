@@ -165,3 +165,6 @@ func main() {
 		log.Fatal("ListenAndServe", err)
 	}
 }
+
+// TODO: support websocket
+// TODO: supoort port setting by os.Args
