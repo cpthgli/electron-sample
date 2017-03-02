@@ -53,7 +53,7 @@ function createMainWindow() {
   // 遅延表示
   // mainWindow.once('ready-to-show', () => {
   //  console.log('main ready-to-show');
-  //  mainWindow.show()
+  //  mainWindow.show()a
   // })
 
   mainWindow.on('closed', function () {
@@ -68,7 +68,7 @@ app.on('window-all-closed', function () {
   if (process.platform !== 'darwin') {
     app.quit();
   }
-  console.log('window all clesed');
+  console.log('window all closed');
 })
 
 app.on('activate', function () {
