@@ -13,7 +13,7 @@ function createMainWindow() {
   });
 
   function runServer() {
-    var server = require('child_process').spawn('./main');
+    var server = require('child_process').execFile('./main');
     console.log('server started');
     return server;
   }
